@@ -17,8 +17,6 @@
       <section-group>
 				<section>
 					<question-search />
-					<div id="question-matches">
-					</div>
         </section>
       </section-group>
         
