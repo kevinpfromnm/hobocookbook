@@ -222,7 +222,7 @@
 
 <def tag="question-search">
 	<form action="/questions/search" method="GET">
-		<label for="query"><h3>What is your question?</h3></label>
+		<label for="query"><h3><ht key="question.search.query_label">What is your question?</ht></h3></label>
 		<input type="text" size="50" name="query" value="#{@query}" />
 		<submit label="Ask!" />
 	</form>
