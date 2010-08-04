@@ -1,0 +1,11 @@
+<index-page>
+	<before-collection:>
+		<question-search />
+	</before-collection:>
+	<collection:>
+		<empty-message:>
+			No questions match yours.<br />
+			<a if="&@query" with="&Question.new(:subject => @query)">Add it?</a>
+		</empty-message:>
+	</collection:>
+</index-page>

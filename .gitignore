@@ -7,4 +7,5 @@ tmtags
 app/views/taglibs/auto
 public/img/*
 manual/generators/*.markdown
-
+*.swp
+solr/*

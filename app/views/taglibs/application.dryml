@@ -220,6 +220,12 @@
   <a href="http://daringfireball.net/projects/markdown/syntax" target="_blank" merge-attrs param="default"/>
 </def>
 
+<def tag="question-search">
+	<form action="/questions/search" method="GET">
+		<label for="query"><h3>What is your question?</h3></label>
+		<input type="text" name="query" value="#{@query}" />
+	</form>
+</def>
 
 <def tag="input" for="Recipe"><name-one merge/></def>
 

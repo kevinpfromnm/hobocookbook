@@ -2,6 +2,8 @@ class Question < ActiveRecord::Base
 
   hobo_model # Don't put anything above this
 
+  acts_as_solr :fields => [:subject, :description]
+
   fields do
     subject     :string, :name => true
     description :optional_markdown
@@ -11,7 +13,8 @@ class Question < ActiveRecord::Base
   
   has_many :answers, :dependent => :destroy
   has_many :recipes, :through => :answers, :uniq => true
-  
+ 
+  named_scope :none, { :conditions => 'id = 1 and id = 2' } 
   include OwnedModel
 
 end
