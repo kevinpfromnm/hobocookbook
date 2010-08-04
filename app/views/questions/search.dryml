@@ -3,8 +3,7 @@
 		<question-search />
 		<collection>
 			<empty-message:>
-				No questions match yours.<br />
-				<a if="&@query" with="&Question.new(:subject => @query)">Add it?</a>
+				<ht key="questions.search.empty_message">No questions match yours.</ht><br />
 			</empty-message:>
 		</collection>
 		<do with="&Question.user_new(current_user,:subject => @query)" if="&@query">
