@@ -36,6 +36,7 @@ begin
   Solr::XML::Element = XML::Node
   
 rescue LoadError => e # If we can't load either rubygems or libxml-ruby
+  puts "Requiring REXML"
   # Just use REXML.
   require 'rexml/document'
   Solr::XML::Element = REXML::Element

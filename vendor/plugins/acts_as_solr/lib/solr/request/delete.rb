@@ -36,14 +36,12 @@ class Solr::Request::Delete < Solr::Request::Update
   def to_s
     delete_element = Solr::XML::Element.new('delete')
     if @document_id
-      [*@document_id].each do |id|
-        id_element = Solr::XML::Element.new('id')
-        id_element.text = id
-        delete_element.add_element(id_element)
-      end
+      id_element = Solr::XML::Element.new('id')
+      id_element.text = @document_id
+      delete_element.add_element(id_element)
     elsif @query
       query = Solr::XML::Element.new('query')
-      query.text = @query
+      query.text = @query 
       delete_element.add_element(query)
     end
     delete_element.to_s

@@ -16,11 +16,11 @@ namespace :solr do
       puts "Port #{SOLR_PORT} in use" and return
 
     rescue => e #not responding
-      puts e unless e.is_a?(Errno::ECONNREFUSED)
+
       Dir.chdir(SOLR_PATH) do
         pid = fork do
           #STDERR.close
-          exec "java #{SOLR_JVM_OPTIONS} -Dsolr.data.dir=#{SOLR_DATA_PATH} -Djetty.logs=#{SOLR_LOGS_PATH} -Djetty.port=#{SOLR_PORT} -javaagent:lib/newrelic/newrelic.jar -jar start.jar >> #{SOLR_LOGS_PATH}/solr_console.log 2>&1"
+          exec "java #{SOLR_JVM_OPTIONS} -Dsolr.data.dir=#{SOLR_DATA_PATH} -Djetty.logs=#{SOLR_LOGS_PATH} -Djetty.port=#{SOLR_PORT} -jar start.jar"
         end
         sleep(5)
         File.open("#{SOLR_PIDS_PATH}/#{ENV['RAILS_ENV']}_pid", "w"){ |f| f << pid}

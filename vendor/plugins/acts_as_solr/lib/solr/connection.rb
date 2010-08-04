@@ -44,14 +44,6 @@ class Solr::Connection
     @connection = Net::HTTP.new(@url.host, @url.port)
     
     @connection.read_timeout = opts[:timeout] if opts[:timeout]
-    
-    
-    if opts[:slave]
-      @url_slave = URI.parse(opts[:slave])
-      @connection_slave = Net::HTTP.new(@url_slave.host, @url_slave.port)
-      @connection_slave.read_timeout = opts[:timeout] if opts[:timeout]
-    end
-    
   end
 
   # add a document to the index. you can pass in either a hash
@@ -155,33 +147,24 @@ class Solr::Connection
   
   # send a given Solr::Request and return a RubyResponse or XmlResponse
   # depending on the type of request
-  def send(request, opts={})
-    data = post(request, opts)
+  def send(request)
+    data = post(request)
     Solr::Response::Base.make_response(request, data)
   end
 
   # send the http post request to solr; for convenience there are shortcuts
   # to some requests: add(), query(), commit(), delete() or send()
-  def post(request, opts={})
-    opts[:timeout] ||= ActsAsSolr.client_timeout
-    #raise request.to_s
-    begin
-      opts[:timeout] = nil unless request.handler == 'select'
-      timeout(opts[:timeout].to_i) do
-           current_connection = (@connection_slave and request.handler == 'select' and request.to_s.include?("__SLAVE__"))? @connection_slave : @connection
-           response = current_connection.post(@url.path + "/" + request.handler,
-           request.to_s,
-           { "Content-Type" => request.content_type })           
-        case response
-        when Net::HTTPSuccess then response.body
-        else
-          response.error!
-        end
-      end
-    rescue Timeout::Error
-      raise Net::HTTPGatewayTimeOut
-      ## handle the timeout
+  def post(request)
+    response = @connection.post(@url.path + "/" + request.handler,
+                                request.to_s,
+                                { "Content-Type" => request.content_type })
+  
+    case response
+    when Net::HTTPSuccess then response.body
+    else
+      response.error!
     end
+  
   end
   
 private
