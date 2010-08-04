@@ -1,11 +1,17 @@
 <index-page>
-	<before-collection:>
+	<collection: replace>
 		<question-search />
-	</before-collection:>
-	<collection:>
-		<empty-message:>
-			No questions match yours.<br />
-			<a if="&@query" with="&Question.new(:subject => @query)">Add it?</a>
-		</empty-message:>
+		<collection>
+			<empty-message:>
+				No questions match yours.<br />
+				<a if="&@query" with="&Question.new(:subject => @query)">Add it?</a>
+			</empty-message:>
+		</collection>
+		<do with="&Question.user_new(current_user,:subject => @query)" if="&@query">
+			<h3><ht key="questions.search.new_heading">None of those questions quite right?</ht></h3>
+			<form owner="user" method="post">
+				<submit: label="#{ht 'questions.actions.create', :default => ['Create Question']}" />
+			</form>
+		</do>
 	</collection:>
 </index-page>
