@@ -2,6 +2,11 @@ class Question < ActiveRecord::Base
 
   hobo_model # Don't put anything above this
 
+  searchable do
+    text :subject, :default_boost => 2
+    text :description
+  end
+
   fields do
     subject     :string, :name => true
     description :optional_markdown
