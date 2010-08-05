@@ -8,4 +8,4 @@ app/views/taglibs/auto
 public/img/*
 manual/generators/*.markdown
 *.swp
-solr/*
+solr/data/*
