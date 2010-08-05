@@ -21,19 +21,19 @@ class QuestionsController < ApplicationController
     query = query.split(' ').*.+('~').join(' ') unless query.grep(/~/) or query.blank?
 
     # if no results and it doesn't already include AND/OR which breaks solr, try it as an OR search
-    #begin
-      #if Question.count_by_solr(query) == 0 and
-                        #query.split(' ').grep(/^(and|or|[^!\\])$/i).blank?
-        #query = query.split(' ').try.join(' OR ') || @query 
-      #end
+    begin
+      if Question.count_by_solr(query) == 0 and
+                        query.split(' ').grep(/^(and|or|[^!\\])$/i).blank?
+        query = query.split(' ').try.join(' OR ') || @query 
+      end
 
-      #@questions = Question.solr_paginated_search(query,
-                        #:page => (params[:page] or 1), 
-                        #:per_page => 10)
-    #rescue => e
+      @questions = Question.solr_paginated_search(query,
+                        :page => (params[:page] or 1), 
+                        :per_page => 10)
+    rescue => e
       hobo_index Question.none
-      #flash[:error] = "Search syntax error.  Please simplify your phrase or eliminate special characters."
-    #end
+      flash[:error] = "Search syntax error.  Please simplify your phrase or eliminate special characters."
+    end
     @questions.member_class = Question
   end
 

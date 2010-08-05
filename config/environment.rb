@@ -68,3 +68,4 @@ Rails::Initializer.run do |config|
   config.action_controller.page_cache_directory = "#{RAILS_ROOT}/public/cache/"
 end
 
+require 'solr_pagination.rb'
