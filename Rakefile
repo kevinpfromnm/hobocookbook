@@ -12,3 +12,5 @@ require 'tasks/rails'
 gem 'gabrielg-vlad'
 require 'vlad'
 Vlad.load(:app => nil, :scm => :git)
+
+require 'sunspot/rails/tasks'
